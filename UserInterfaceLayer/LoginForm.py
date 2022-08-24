@@ -79,11 +79,8 @@ class LoginUI:
                             justify='center')
         entPassword.grid(row=2, column=0, padx=20, pady=10)
 
-        txtDatabase = IntVar()
-        rdSQLite = Radiobutton(loginfrm, text='SQLite', variable=txtDatabase, value=1)
-        rdSQLite.grid(row=3, column=0, padx=40, pady=10, sticky='w')
-        rdSQLServer = Radiobutton(loginfrm, text='SQL Server', variable=txtDatabase, value=2)
-        rdSQLServer.grid(row=3, column=0, padx=40, pady=10, sticky='e')
+        lblHint = Label(loginfrm, text=' ')
+        lblHint.grid(row=3, column=0, padx=20, pady=10)
 
         btn = Button(loginfrm, text='Login', width=33, relief='groove', font='Tahoma 10', command=checkLogin)
         btn.grid(row=4, column=0, padx=20, pady=10)

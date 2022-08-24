@@ -13,10 +13,10 @@ class MainUI:
         mainfrm = Tk()
         mainfrm.title('Main Form')
         mainfrm.iconbitmap('UserInterfaceLayer/icon/Main.ico')
-        mainfrm.geometry('480x480')
+        mainfrm.geometry('500x530')
         mainfrm.resizable(False, False)
-        positionRight = int(mainfrm.winfo_screenwidth() / 2 - 480 / 2)
-        positionDown = int(mainfrm.winfo_screenheight() / 2 - 480 / 2)
+        positionRight = int(mainfrm.winfo_screenwidth() / 2 - 500 / 2)
+        positionDown = int(mainfrm.winfo_screenheight() / 2 - 530 / 2)
         mainfrm.geometry("+{}+{}".format(positionRight, positionDown))
 # TODO: User Profile ویرایش اطلاعات کاربری
 # TODO: logout button
@@ -40,171 +40,72 @@ class MainUI:
             login = LoginUI()
             login.loginFormLoad()
 
-        # region Student
-        def AddStudentCommand():
-            mainfrm.destroy()
-            from UserInterfaceLayer.StudentForm import StudentUI
-            studentui = StudentUI(self.User)
-            studentui.studentFormLoad()
-
-        def ViewStudentCommand():
+        def studentCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.ListSelectForm import ListSelectUI
             listSelectUI = ListSelectUI(self.User, table='Student')
             listSelectUI.listSelectFormLoad()
 
-        # endregion
-
-        # region Teacher
-        def AddTeacherCommand():
-            mainfrm.destroy()
-            from UserInterfaceLayer.TeacherForm import TeacherUI
-            teacherui = TeacherUI(self.User)
-            teacherui.teacherFormLoad()
-
-        def ViewTeacherCommand():
+        def teacherCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.ListSelectForm import ListSelectUI
             listSelectUI = ListSelectUI(self.User, table='Teacher')
             listSelectUI.listSelectFormLoad()
 
-        # endregion
-
-        # region Employee
-        def AddEmployeeCommand():
-            mainfrm.destroy()
-            from UserInterfaceLayer.EmployeeForm import EmployeeUI
-            employeeui = EmployeeUI(self.User)
-            employeeui.employeeFormLoad()
-
-        def ViewEmployeeCommand():
+        def employeeCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.ListSelectForm import ListSelectUI
             listSelectUI = ListSelectUI(self.User, table='Employee')
             listSelectUI.listSelectFormLoad()
 
-        # endregion
-
-        # region Department
-        def AddDepartmentCommand():
+        def departmentCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.DepartmentForm import DepartmentUI
             departmentui = DepartmentUI(self.User)
             departmentui.departmentFormLoad()
 
-        def EditDepartmentCommand():
-            pass
-
-        def ViewDepartmentCommand():
-            pass
-
-        # endregion
-
-        # region CourseCategory
-        def AddCourseCategoryCommand():
+        def courseCategoryCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.CourseCategoryForm import CourseCategoryUI
             courseCategoryui = CourseCategoryUI(self.User)
             courseCategoryui.courseCategoryFormLoad()
 
-        def EditCourseCategoryCommand():
-            pass
-
-        def ViewCourseCategoryCommand():
-            pass
-
-        # endregion
-
-        # region Course
-        def AddCourseCommand():
+        def courseCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.CourseForm import CourseUI
             courseui = CourseUI(self.User)
             courseui.courseFormLoad()
 
-        def EditCourseCommand():
-            pass
-
-        def ViewCourseCommand():
-            pass
-
-        # endregion
-
-        # region Registeration
-        def AddRegisterationCommand():
+        def registerationCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.RegisterationForm import RegisterationUI
             registerationui = RegisterationUI(self.User)
             registerationui.registerationFormLoad()
 
-        def EditRegisterationCommand():
-            pass
-
-        def ViewRegisterationCommand():
-            pass
-
-        # endregion
-
-        # region PDF
-        # def AddRegisterationCommand():
+        # def registerationCommand():
         #     mainfrm.destroy()
         #     from UserInterfaceLayer.RegisterationForm import RegisterationUI
         #     registerationui = RegisterationUI(self.User)
         #     registerationui.registerationFormLoad()
-        #
-        # def EditRegisterationCommand():
-        #     pass
-        #
-        # def ViewRegisterationCommand():
-        #     pass
 
-        # endregion
-
-        # region TrainingCalendar
-        def AddTrainingCalendarCommand():
+        def trainingCalendarCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.TrainingCalendarForm import TrainingCalendarUI
             trainingCalendarui = TrainingCalendarUI(self.User)
             trainingCalendarui.trainingCalendarFormLoad()
 
-        def EditTrainingCalendarCommand():
-            pass
-
-        def ViewTrainingCalendarCommand():
-            pass
-
-        # endregion
-
-        # region Contract
-        def AddContractCommand():
+        def contractCommand():
             pass
             # mainfrm.destroy()
             # from UserInterfaceLayer.ContractForm import ContractUI
             # contractui = ContractUI(self.User)
             # contractui.contractFormLoad()
 
-        def EditContractCommand():
-            pass
-
-        def ViewContractCommand():
-            pass
-
-        # endregion
-
-        # region User
-        def AddUserCommand():
+        def userCommand():
             mainfrm.destroy()
             from UserInterfaceLayer.UserForm import UserUI
             userui = UserUI(self.User)
             userui.userFormLoad()
-
-        def EditUserCommand():
-            pass
-
-        def ViewUserCommand():
-            pass
-
-        # endregion
 # endregion
 
 # region Images ...
@@ -235,164 +136,54 @@ class MainUI:
         frameinfo.grid(row=1, column=0, padx=10, pady=10, sticky='w')
 
 # region Buttons ...
-        # region Student
-        lblStudent = Label(frameinfo, image=imgStudent)
-        lblStudent.grid(row=0, rowspan=2, column=0, columnspan=3, padx=15, pady=10)
+        btnStudent = Button(frameinfo, text='Student', image=imgStudent, compound=TOP, height=100, width=100, pady=10,
+                            relief='groove', command=studentCommand)
+        btnStudent.grid(row=0, rowspan=2, column=0, columnspan=3, padx=5, pady=10)
 
-        btnAddStudent = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddStudentCommand)
-        btnAddStudent.grid(row=2, column=0, padx=0, pady=0, sticky='e')
+        btnTeacher = Button(frameinfo, text='Teacher', image=imgTeacher, compound=TOP, height=100, width=100,
+                            relief='groove', pady=10, command=teacherCommand)
+        btnTeacher.grid(row=0, rowspan=2, column=3, columnspan=3, padx=5, pady=10)
 
-        btnViewStudent = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewStudentCommand)
-        btnViewStudent.grid(row=2, column=2, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Teacher
-        lblTeacher = Label(frameinfo, image=imgTeacher)
-        lblTeacher.grid(row=0, rowspan=2, column=3, columnspan=3, padx=15, pady=10)
+        btnEmployee = Button(frameinfo, text='Employee', image=imgEmployee, compound=TOP, height=100, width=100,
+                             relief='groove', pady=10, command=employeeCommand)
+        btnEmployee.grid(row=0, rowspan=2, column=6, columnspan=3, padx=5, pady=10)
 
-        btnAddTeacher = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddTeacherCommand)
-        btnAddTeacher.grid(row=2, column=3, padx=0, pady=0, sticky='e')
+        btnDepartment = Button(frameinfo, text='Department', image=imgDepartment, compound=TOP, height=100, width=100,
+                               relief='groove', pady=10, command=departmentCommand)
+        btnDepartment.grid(row=0, rowspan=2, column=9, columnspan=3, padx=5, pady=10)
 
-        btnViewTeacher = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewTeacherCommand)
-        btnViewTeacher.grid(row=2, column=5, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Employee
-        lblEmployee = Label(frameinfo, image=imgEmployee)
-        lblEmployee.grid(row=0, rowspan=2, column=6, columnspan=3, padx=15, pady=10)
+        btnCourseCategory = Button(frameinfo, text='CourseCategory', image=imgCourseCategory, compound=TOP, height=100,
+                                   width=100, relief='groove', pady=10, command=courseCategoryCommand)
+        btnCourseCategory.grid(row=3, rowspan=2, column=0, columnspan=3, padx=5, pady=10)
 
-        btnAddEmployee = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddEmployeeCommand)
-        btnAddEmployee.grid(row=2, column=6, padx=0, pady=0, sticky='e')
+        btnCourse = Button(frameinfo, text='Course', image=imgCourse, compound=TOP, height=100, width=100,
+                           relief='groove', pady=10, command=courseCommand)
+        btnCourse.grid(row=3, rowspan=2, column=3, columnspan=3, padx=5, pady=10)
 
-        btnViewEmployee = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewEmployeeCommand)
-        btnViewEmployee.grid(row=2, column=8, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Department
-        lblDepartment = Label(frameinfo, image=imgDepartment)
-        lblDepartment.grid(row=0, rowspan=2, column=9, columnspan=3, padx=15, pady=10)
+        btnRegisteration = Button(frameinfo, text='Registeration', image=imgRegisteration, compound=TOP, height=100,
+                                  width=100, relief='groove', pady=10, command=registerationCommand)
+        btnRegisteration.grid(row=3, rowspan=2, column=6, columnspan=3, padx=5, pady=10)
 
-        btnAddDepartment = Button(frameinfo, text='A', height=1, width=2, relief='groove',
-                                  command=AddDepartmentCommand)
-        btnAddDepartment.grid(row=2, column=9, padx=0, pady=0, sticky='e')
+        btnPDF = Button(frameinfo, text='PDF', image=imgAboutUs, compound=TOP, height=100, width=100, relief='groove',
+                        pady=10,)
+        btnPDF.grid(row=3, rowspan=2, column=9, columnspan=3, padx=5, pady=10)
 
-        btnEditDepartment = Button(frameinfo, text='E', height=1, width=2, relief='groove',
-                                   command=EditDepartmentCommand)
-        btnEditDepartment.grid(row=2, column=10, padx=0, pady=0)
+        btnTrainingCalendar = Button(frameinfo, text='TrainingCalendar', image=imgAboutUs, compound=TOP, height=100,
+                                     width=100, relief='groove', pady=10, command=trainingCalendarCommand)
+        btnTrainingCalendar.grid(row=6, rowspan=2, column=0, columnspan=3, padx=5, pady=10)
 
-        btnViewDepartment = Button(frameinfo, text='V', height=1, width=2, relief='groove',
-                                   command=ViewDepartmentCommand)
-        btnViewDepartment.grid(row=2, column=11, padx=0, pady=0, sticky='w')
-        # endregion
-        # region CourseCategory
-        lblCourseCategory = Label(frameinfo, image=imgCourseCategory)
-        lblCourseCategory.grid(row=3, rowspan=2, column=0, columnspan=3, padx=20, pady=10)
+        btnContract = Button(frameinfo, text='Contract', image=imgAboutUs, compound=TOP, height=100, width=100,
+                             relief='groove', pady=10, command=contractCommand)
+        btnContract.grid(row=6, rowspan=2, column=3, columnspan=3, padx=5, pady=10)
 
-        btnAddCourseCategory = Button(frameinfo, text='A', height=1, width=2, relief='groove',
-                                      command=AddCourseCategoryCommand)
-        btnAddCourseCategory.grid(row=5, column=0, padx=0, pady=0, sticky='e')
+        btn = Button(frameinfo, text='BTN', image=imgAboutUs, compound=TOP, height=100, width=100, relief='groove',
+                     pady=10,)
+        btn.grid(row=6, rowspan=2, column=6, columnspan=3, padx=5, pady=10)
 
-        btnEditCourseCategory = Button(frameinfo, text='E', height=1, width=2, relief='groove',
-                                       command=EditCourseCategoryCommand)
-        btnEditCourseCategory.grid(row=5, column=1, padx=0, pady=0)
+        btnAddUser = Button(frameinfo, text='User', image=imgUser, compound=TOP, height=100, width=100, relief='groove',
+                            pady=10,
+                            command=userCommand)
+        btnAddUser.grid(row=6, rowspan=2, column=9, columnspan=3, padx=5, pady=10)
 
-        btnViewCourseCategory = Button(frameinfo, text='V', height=1, width=2, relief='groove',
-                                       command=ViewCourseCategoryCommand)
-        btnViewCourseCategory.grid(row=5, column=2, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Course
-        lblCourse = Label(frameinfo, image=imgCourse)
-        lblCourse.grid(row=3, rowspan=2, column=3, columnspan=3, padx=20, pady=10)
-
-        btnAddCourse = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddCourseCommand)
-        btnAddCourse.grid(row=5, column=3, padx=0, pady=0, sticky='e')
-
-        btnEditCourse = Button(frameinfo, text='E', height=1, width=2, relief='groove', command=EditCourseCommand)
-        btnEditCourse.grid(row=5, column=4, padx=0, pady=0)
-
-        btnViewCourse = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewCourseCommand)
-        btnViewCourse.grid(row=5, column=5, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Registeration
-        lblRegisteration = Label(frameinfo, image=imgRegisteration)
-        lblRegisteration.grid(row=3, rowspan=2, column=6, columnspan=3, padx=20, pady=10)
-
-        btnAddRegisteration = Button(frameinfo, text='A', height=1, width=2, relief='groove',
-                                     command=AddRegisterationCommand)
-        btnAddRegisteration.grid(row=5, column=6, padx=0, pady=0, sticky='e')
-
-        btnEditRegisteration = Button(frameinfo, text='E', height=1, width=2, relief='groove',
-                                      command=EditRegisterationCommand)
-        btnEditRegisteration.grid(row=5, column=7, padx=0, pady=0)
-
-        btnViewRegisteration = Button(frameinfo, text='V', height=1, width=2, relief='groove',
-                                      command=ViewRegisterationCommand)
-        btnViewRegisteration.grid(row=5, column=8, padx=0, pady=0, sticky='w')
-        # endregion
-        # region PDF
-        lblPDF = Label(frameinfo, text='PDF')
-        lblPDF.grid(row=3, rowspan=2, column=9, columnspan=3, padx=20, pady=10)
-
-        btnAddUser = Button(frameinfo, text='A', height=1, width=2, relief='groove')
-        btnAddUser.grid(row=5, column=9, padx=2, pady=0)
-
-        btnEditUser = Button(frameinfo, text='E', height=1, width=2, relief='groove')
-        btnEditUser.grid(row=5, column=10, padx=2, pady=0)
-
-        btnViewUser = Button(frameinfo, text='V', height=1, width=2, relief='groove')
-        btnViewUser.grid(row=5, column=11, padx=2, pady=0)
-        # endregion
-        # region TrainingCalendar
-        lblTrainingCalendar = Label(frameinfo, text='TrainingCalendar')
-        lblTrainingCalendar.grid(row=6, rowspan=2, column=0, columnspan=3, padx=20, pady=10)
-
-        btnAddTrainingCalendar = Button(frameinfo, text='A', height=1, width=2, relief='groove',
-                                        command=AddTrainingCalendarCommand)
-        btnAddTrainingCalendar.grid(row=8, column=0, padx=0, pady=0, sticky='e')
-
-        btnEditTrainingCalendar = Button(frameinfo, text='E', height=1, width=2, relief='groove',
-                                         command=EditTrainingCalendarCommand)
-        btnEditTrainingCalendar.grid(row=8, column=1, padx=0, pady=0)
-
-        btnViewTrainingCalendar = Button(frameinfo, text='V', height=1, width=2, relief='groove',
-                                         command=ViewTrainingCalendarCommand)
-        btnViewTrainingCalendar.grid(row=8, column=2, padx=0, pady=0, sticky='w')
-        # endregion
-        # region Contract
-        lblContract = Label(frameinfo, text='Contrct')
-        lblContract.grid(row=6, rowspan=2, column=3, columnspan=3, padx=20, pady=10)
-
-        btnAddContract = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddContractCommand)
-        btnAddContract.grid(row=8, column=3, padx=0, pady=0, sticky='e')
-
-        btnEditContract = Button(frameinfo, text='E', height=1, width=2, relief='groove', command=EditContractCommand)
-        btnEditContract.grid(row=8, column=4, padx=0, pady=0)
-
-        btnViewContract = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewContractCommand)
-        btnViewContract.grid(row=8, column=5, padx=0, pady=0, sticky='w')
-        # endregion
-        # region ?
-        lblUser = Label(frameinfo, text='?')
-        lblUser.grid(row=6, rowspan=2, column=6, columnspan=3, padx=20, pady=10)
-
-        btnAddUser = Button(frameinfo, text='A', height=1, width=2, relief='groove')
-        btnAddUser.grid(row=8, column=6, padx=2, pady=0)
-
-        btnEditUser = Button(frameinfo, text='E', height=1, width=2, relief='groove')
-        btnEditUser.grid(row=8, column=7, padx=2, pady=0)
-
-        btnViewUser = Button(frameinfo, text='V', height=1, width=2, relief='groove')
-        btnViewUser.grid(row=8, column=8, padx=2, pady=0)
-        # endregion
-        # region User
-        lblUser = Label(frameinfo, image=imgUser)
-        lblUser.grid(row=6, rowspan=2, column=9, columnspan=3, padx=20, pady=10)
-
-        btnAddUser = Button(frameinfo, text='A', height=1, width=2, relief='groove', command=AddUserCommand)
-        btnAddUser.grid(row=8, column=9, padx=0, pady=0, sticky='e')
-
-        btnEditUser = Button(frameinfo, text='E', height=1, width=2, relief='groove', command=EditUserCommand)
-        btnEditUser.grid(row=8, column=10, padx=0, pady=0)
-
-        btnViewUser = Button(frameinfo, text='V', height=1, width=2, relief='groove', command=ViewUserCommand)
-        btnViewUser.grid(row=8, column=11, padx=0, pady=0, sticky='w')
-        # endregion
 # endregion
         mainfrm.mainloop()

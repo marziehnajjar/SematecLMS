@@ -26,10 +26,10 @@ class TeacherUI:
             pass
 
         def backToMain():
+            from UserInterfaceLayer.ListSelectForm import ListSelectUI
             teacherfrm.destroy()
-            from UserInterfaceLayer.MainForm import MainUI
-            mainui = MainUI(self.User)
-            mainui.mainFormLoad()
+            listselectui = ListSelectUI(self.User, table='Teacher')
+            listselectui.listSelectFormLoad()
 
         def getTeacherCommand():
             FirstName = txtFirstName.get()

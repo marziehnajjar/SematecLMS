@@ -9,12 +9,21 @@ from BusinessLogicLayer import *
 
 
 class StudentUI:
-    def __init__(self, user: User):
+    def __init__(self, user: User, studentid=None):
         self.User = user
+        self.StudentID = studentid
         self.Educations = []
 
         studentdb = StudentDB(None)
         self.EducationFiels = studentdb.readEducationFiels()
+        self.StudentType = studentdb.readStudentTypeList()
+
+        if studentid is not None:
+            self.Educations = studentdb.readStudentEducation(studentid)
+            self.Student = Student()
+
+            self.studentRow = studentdb.readStudent(studentid)
+            # print(studentRow)
 
     def studentFormLoad(self):
         studentfrm = Tk()
@@ -31,11 +40,61 @@ class StudentUI:
             self.Educations.append(f'{EducationDegree}-{EducationField}')
             educationsVar.set(self.Educations)
 
+        def deleteToList():
+            for i in self.Educations:
+                # print(i.split(':')[0].split('-'))
+                fieldID = i.split(':')[0].split('-')[1]
+                degree = i.split(':')[0].split('-')[0]
+                # print(degree)
+                # studentdb.addEducationPerson(degree, fieldID)
+
         def backToMain():
+            from UserInterfaceLayer.ListSelectForm import ListSelectUI
             studentfrm.destroy()
-            from UserInterfaceLayer.MainForm import MainUI
-            mainui = MainUI(self.User)
-            mainui.mainFormLoad()
+            listselectui = ListSelectUI(self.User, table='Student')
+            listselectui.listSelectFormLoad()
+
+
+        def setValues():
+            entFirstName.insert(END, self.studentRow[0])
+            entLastName.insert(END, self.studentRow[1])
+            entNationalCode.insert(END, self.studentRow[2])
+            txtSex.set(self.studentRow[2])
+            entBirthdate.set_date(self.studentRow[4])
+            entEmail.insert(END, self.studentRow[5])
+            entMobile.insert(END, self.studentRow[6])
+            entCountry.insert(END, self.studentRow[7])
+            entProvince.insert(END, self.studentRow[8])
+            entCity.insert(END, self.studentRow[10])
+            entStreet.insert(END, self.studentRow[9])
+            entPostalCode.insert(END, self.studentRow[11])
+            cmbType.set(self.studentRow[13])
+            for i in self.Educations:
+                listbox.insert(END, i)
+
+        def updateStudentCommand():
+            FirstName = entFirstName.get()
+            LastName = entLastName.get()
+            NationalCode = entNationalCode.get()
+            Sex = txtSex.get()
+            Birthdate = entBirthdate.get()
+            Email = entEmail.get()
+            Mobile = entMobile.get()
+            Country = entCountry.get()
+            Province = entProvince.get()
+            City = entCity.get()
+            Street = entStreet.get()
+            Postalcode = entPostalCode.get()
+            # print(cmbType.get().split(':'))
+            Type = int(cmbType.get().split(':')[0])
+
+            student = Model.Student(self.StudentID, FirstName, LastName, NationalCode, Sex, Birthdate, Email, Mobile,
+                                    Country, Province, City, Street, Postalcode, Type)
+
+            studentvd = StudentVD(student)
+            studentvd.validationUpdateForm()
+
+
 
         def getStudentCommand():
             # get the parameters of classStudent from user:
@@ -51,17 +110,23 @@ class StudentUI:
             City = txtCity.get()
             Street = txtStreet.get()
             Postalcode = txtPostalCode.get()
-            EducationDegree = txtEducationDegree.get()
-            EducationField = txtEducationField.get()
-            Type = int(txtType.get())
+            Type = int(txtType.get().split(':')[0])
             # give the parameters to attribute of object(instance of classStudent)
             student = Model.Student(0, FirstName, LastName, NationalCode, Sex, Birthdate, Email, Mobile,
-            Country, Province, City, Street, Postalcode, EducationDegree, EducationField, Type)
+            Country, Province, City, Street, Postalcode, Type)
 
             studentvd = StudentVD(student)
             studentvd.validationForm()
-            # for i in self.Educations:
 
+            studentdb = StudentDB(student)
+
+
+            for i in self.Educations:
+                # print(i.split(':')[0].split('-'))
+                fieldID = i.split(':')[0].split('-')[1]
+                degree = i.split(':')[0].split('-')[0]
+                # print(degree)
+                studentdb.addEducationPerson(degree, fieldID)
 
         frameinfo = LabelFrame(studentfrm, text=' Student Information ')
         frameinfo.grid(row=0, column=0, padx=20, pady=10, sticky='w')
@@ -89,10 +154,10 @@ class StudentUI:
 
         lblSex = Label(frameinfo, text='Sex: ')
         lblSex.grid(row=4, column=0, padx=10, pady=5, sticky='w')
-        txtSex = IntVar()
-        rdMale = Radiobutton(frameinfo, text='Male', variable=txtSex, value=1)
+        txtSex = StringVar()
+        rdMale = Radiobutton(frameinfo, text='Male', variable=txtSex, value='M')
         rdMale.grid(row=4, column=1, padx=5, pady=5, sticky='w')
-        rdFemale = Radiobutton(frameinfo, text='Female', variable=txtSex, value=2)
+        rdFemale = Radiobutton(frameinfo, text='Female', variable=txtSex, value='F')
         rdFemale.grid(row=4, column=1, padx=100, pady=5, sticky='e')
 
         lblBirthdate = Label(frameinfo, text='Birthdate: ')
@@ -171,16 +236,24 @@ class StudentUI:
         lblType.grid(row=14, column=0, padx=10, pady=5, sticky='w')
         txtType = StringVar()
         cmbType = Combobox(frameinfo, textvariable=txtType, width=20, state='readonly')
-        arrayType = ['1', '2']
-        cmbType['values'] = arrayType
+        cmbType['values'] = self.StudentType
         cmbType.grid(row=14, column=1, padx=10, pady=5, sticky='w')
         cmbType.current()
 
-        btnRegisterStudent = Button(studentfrm, text='Register Student', width=20, relief='groove',
-                                    command=getStudentCommand)
+        if self.StudentID is None:
+            btnRegisterStudent = Button(studentfrm, text='Register Student', width=20, relief='groove',
+                                        command=getStudentCommand)
+        else:
+            btnRegisterStudent = Button(studentfrm, text='Update Student', width=20, relief='groove',
+                                        command=updateStudentCommand)
+
         btnRegisterStudent.grid(row=14, column=0, padx=30, pady=10, sticky='w')
 
         btnBack = Button(studentfrm, text='Back to Main', width=20, relief='groove', command=backToMain)
         btnBack.grid(row=14, column=0, padx=30, pady=10, sticky='e')
+
+        if self.StudentID is not None:
+            setValues()
 # endregion
         studentfrm.mainloop()
+

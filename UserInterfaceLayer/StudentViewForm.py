@@ -8,64 +8,46 @@ from Model import *
 from BusinessLogicLayer import *
 
 
-class StudentUI:
-    def __init__(self, user: User, func):
-        self.User = user
-        self.FUNC = func
-        self.State = 'normal'
-        self.Educations = []
-
+class StudentViewUI:
+    def __init__(self, user: User, studentid):
         studentdb = StudentDB(None)
-        self.EducationFiels = studentdb.readEducationFiels()
 
-        if func == 'view':
-            self.State = 'disabled'
+        self.User = user
+        self.Educations = studentdb.readStudentEducation(studentid)
+        for i in range(5):
+            self.Educations.append(' ')
+        print(self.Educations)
+        self.Student = Student()
 
-    def studentFormLoad(self):
+        studentRow = studentdb.readStudent(studentid)
+        print(studentRow)
+        self.Student.StudentID = studentid
+        self.Student.FirstName = studentRow[0]
+        self.Student.LastName = studentRow[1]
+        self.Student.NationalCode = studentRow[2]
+        self.Student.Sex = studentRow[3]
+        self.Student.Birthdate = studentRow[4]
+        self.Student.Email = studentRow[5]
+        self.Student.Mobile = studentRow[6]
+        self.Student.Country = studentRow[7]
+        self.Student.Province = studentRow[8]
+        self.Student.Street = studentRow[9]
+        self.Student.City = studentRow[10]
+        self.Student.Postalcode = studentRow[11]
+        self.Registerdate = studentRow[12]
+        self.Student.Type = studentRow[13]
+
+    def studentViewFormLoad(self):
         studentfrm = Tk()
         studentfrm.title('Register Student')
-        studentfrm.geometry('490x610')
+        studentfrm.geometry('440x620')
         studentfrm.resizable(False, False)
-        positionRight = int(studentfrm.winfo_screenwidth() / 2 - 490 / 2)
-        positionDown = int(studentfrm.winfo_screenheight() / 2 - 610 / 2)
+        positionRight = int(studentfrm.winfo_screenwidth() / 2 - 440 / 2)
+        positionDown = int(studentfrm.winfo_screenheight() / 2 - 620 / 2)
         studentfrm.geometry("+{}+{}".format(positionRight, positionDown))
-
-        def addToList():
-            EducationDegree = txtEducationDegree.get()
-            EducationField = txtEducationField.get()
-            self.Educations.append(f'{EducationDegree}-{EducationField}')
-            educationsVar.set(self.Educations)
 
         def backToMain():
             studentfrm.destroy()
-            from UserInterfaceLayer.MainForm import MainUI
-            mainui = MainUI(self.User)
-            mainui.mainFormLoad()
-
-        def getStudentCommand():
-            # get the parameters of classStudent from user:
-            FirstName = txtFirstName.get()
-            LastName = txtLastName.get()
-            NationalCode = txtNationalCode.get()
-            Sex = txtSex.get()
-            Birthdate = txtBirthdate.get()
-            Email = txtEmail.get()
-            Mobile = txtMobile.get()
-            Country = txtCountry.get()
-            Province = txtProvince.get()
-            City = txtCity.get()
-            Street = txtStreet.get()
-            Postalcode = txtPostalCode.get()
-            EducationDegree = txtEducationDegree.get()
-            EducationField = txtEducationField.get()
-            Type = int(txtType.get())
-            # give the parameters to attribute of object(instance of classStudent)
-            student = Model.Student(0, FirstName, LastName, NationalCode, Sex, Birthdate, Email, Mobile,
-            Country, Province, City, Street, Postalcode, EducationDegree, EducationField, Type)
-
-            studentvd = StudentVD(student)
-            studentvd.validationForm()
-            # for i in self.Educations:
 
 
         frameinfo = LabelFrame(studentfrm, text=' Student Information ')
@@ -73,119 +55,90 @@ class StudentUI:
 # region Widgets ...
         lblID = Label(frameinfo, text='Student ID : ')
         lblID.grid(row=0, column=0, padx=10, pady=5, sticky='w')
+        lblID = Label(frameinfo, text=self.Student.StudentID, font='tahoma 10 bold')
+        lblID.grid(row=0, column=1, padx=10, pady=5, sticky='w')
 
         lblFirstName = Label(frameinfo, text='FirstName: ')
         lblFirstName.grid(row=1, column=0, padx=10, pady=5, sticky='w')
-        txtFirstName = StringVar()
-        entFirstName = Entry(frameinfo, state=self.State, textvariable=txtFirstName, width=23, highlightthickness=1)
+        entFirstName = Label(frameinfo, text=self.Student.FirstName, font='tahoma 10 bold')
         entFirstName.grid(row=1, column=1, padx=10, pady=5, sticky='w')
 
         lblLastName = Label(frameinfo, text='LastName: ')
         lblLastName.grid(row=2, column=0, padx=10, pady=5, sticky='w')
-        txtLastName = StringVar()
-        entLastName = Entry(frameinfo, state=self.State, textvariable=txtLastName, width=23, highlightthickness=1)
+        entLastName = Label(frameinfo, text=self.Student.LastName, font='tahoma 10 bold')
         entLastName.grid(row=2, column=1, padx=10, pady=5, sticky='w')
 
         lblNationalCode = Label(frameinfo, text='NationalCode: ')
         lblNationalCode.grid(row=3, column=0, padx=10, pady=5, sticky='w')
-        txtNationalCode = StringVar()
-        entNationalCode = Entry(frameinfo, state=self.State, textvariable=txtNationalCode, width=23, highlightthickness=1)
+        entNationalCode = Label(frameinfo, text=self.Student.NationalCode, font='tahoma 10 bold')
         entNationalCode.grid(row=3, column=1, padx=10, pady=5, sticky='w')
 
         lblSex = Label(frameinfo, text='Sex: ')
         lblSex.grid(row=4, column=0, padx=10, pady=5, sticky='w')
-        txtSex = IntVar()
-        rdMale = Radiobutton(frameinfo,state=self.State, text='Male', variable=txtSex, value=1)
-        rdMale.grid(row=4, column=1, padx=5, pady=5, sticky='w')
-        rdFemale = Radiobutton(frameinfo,state=self.State, text='Female', variable=txtSex, value=2)
-        rdFemale.grid(row=4, column=1, padx=100, pady=5, sticky='e')
+        entSex = Label(frameinfo, text=self.Student.Sex, font='tahoma 10 bold')
+        entSex.grid(row=4, column=1, padx=5, pady=5, sticky='w')
 
         lblBirthdate = Label(frameinfo, text='Birthdate: ')
         lblBirthdate.grid(row=5, column=0, padx=10, pady=5, sticky='w')
-        txtBirthdate = StringVar()
-        entBirthdate = DateEntry(frameinfo, state=self.State, textvariable=txtBirthdate, width=14, year=2021, month=1, day=1,
-                                 background='darkblue', foreground='white', borderwidth=1, relief='solid',
-                                 font='tahoma 10')
+        entBirthdate = Label(frameinfo, text=self.Student.Birthdate, font='tahoma 10 bold')
         entBirthdate.grid(row=5, column=1, padx=10, pady=5, sticky='w')
-        lblBirthdateHint = Label(frameinfo, text='(Sample: YYYY/MM/DD)')
-        lblBirthdateHint.grid(row=6, column=1, padx=10, pady=0, sticky='w')
 
         lblEmail = Label(frameinfo, text='Email: ')
-        lblEmail.grid(row=7, column=0, padx=10, pady=5, sticky='w')
-        txtEmail = StringVar()
-        entEmail = Entry(frameinfo, state=self.State, textvariable=txtEmail, width=23, highlightthickness=1)
-        entEmail.grid(row=7, column=1, padx=10, pady=5, sticky='w')
+        lblEmail.grid(row=6, column=0, padx=10, pady=5, sticky='w')
+        entEmail = Label(frameinfo, text=self.Student.Email, font='tahoma 10 bold')
+        entEmail.grid(row=6, column=1, padx=10, pady=5, sticky='w')
 
         lblMobile = Label(frameinfo, text='Mobile: ')
-        lblMobile.grid(row=8, column=0, padx=10, pady=5, sticky='w')
-        txtMobile = StringVar()
-        entMobile = Entry(frameinfo, state=self.State, textvariable=txtMobile, width=23, highlightthickness=1)
-        entMobile.grid(row=8, column=1, padx=10, pady=5, sticky='w')
+        lblMobile.grid(row=7, column=0, padx=10, pady=5, sticky='w')
+        entMobile = Label(frameinfo, text=self.Student.Mobile, font='tahoma 10 bold')
+        entMobile.grid(row=7, column=1, padx=10, pady=5, sticky='w')
 
         lblAddress = Label(frameinfo, text='Address: ')
-        lblAddress.grid(row=9, column=0, padx=10, pady=5, sticky='w')
+        lblAddress.grid(row=8, column=0, padx=10, pady=5, sticky='w')
 
-        txtCountry = StringVar(value='Country')
-        entCountry = Entry(frameinfo, state=self.State, textvariable=txtCountry, width=15, highlightthickness=1)
-        entCountry.grid(row=9, column=1, padx=10, pady=5, sticky='w')
+        entCountry = Label(frameinfo, text=self.Student.Country, font='tahoma 10 bold')
+        entCountry.grid(row=8, column=1, padx=10, pady=5, sticky='w')
 
-        txtProvince = StringVar(value='Province')
-        entProvince = Entry(frameinfo, state=self.State, textvariable=txtProvince, width=15, highlightthickness=1)
-        entProvince.grid(row=9, column=1, padx=110, pady=5, sticky='w')
+        entProvince = Label(frameinfo, text=self.Student.Province, font='tahoma 10 bold')
+        entProvince.grid(row=8, column=1, padx=110, pady=5, sticky='w')
 
-        txtCity = StringVar(value='City')
-        entCity = Entry(frameinfo, state=self.State, textvariable=txtCity, width=15, highlightthickness=1)
-        entCity.grid(row=9, column=1, padx=(210, 0), pady=5, sticky='w')
+        entCity = Label(frameinfo, text=self.Student.City, font='tahoma 10 bold')
+        entCity.grid(row=8, column=1, padx=(210, 0), pady=5, sticky='w')
 
-        txtStreet = StringVar(value='Street')
-        entStreet = Entry(frameinfo, state=self.State, textvariable=txtStreet, width=15, highlightthickness=1)
-        entStreet.grid(row=10, column=1, padx=10, pady=5, sticky='w')
+        entStreet = Label(frameinfo, text=self.Student.Street, font='tahoma 10 bold')
+        entStreet.grid(row=9, column=1, padx=10, pady=5, sticky='w')
 
-        txtPostalCode = StringVar(value='PostalCode')
-        entPostalCode = Entry(frameinfo, state=self.State, textvariable=txtPostalCode, width=15, highlightthickness=1)
-        entPostalCode.grid(row=10, column=1, padx=(110, 0), pady=5, sticky='w')
+        entPostalCode = Label(frameinfo, text=self.Student.Postalcode, font='tahoma 10 bold')
+        entPostalCode.grid(row=9, column=1, padx=(110, 0), pady=5, sticky='w')
 
-        # TODO  read from DB
-        lblEducationDegree = Label(frameinfo, text='Education Degree: ')
-        lblEducationDegree.grid(row=11, column=0, padx=10, pady=5, sticky='w')
-        txtEducationDegree = StringVar()
-        cmbEducationDegree = Combobox(frameinfo, width=20, textvariable=txtEducationDegree, state=self.State)
-        arrayEducationDegree = ['کارشناسی', 'کارشناسی ارشد', 'دکتری', 'دیپلم']
-        cmbEducationDegree['values'] = arrayEducationDegree  #educationDegreeList
-        cmbEducationDegree.grid(row=11, column=1, padx=10, pady=5, sticky='w')
-        cmbEducationDegree.current()
+        lblEducation = Label(frameinfo, text='Educations :')
+        lblEducation.grid(row=10, column=0, padx=10, pady=5, sticky='nw')
+        entEducation = Label(frameinfo, text=self.Educations[0], font='tahoma 10 bold')
+        entEducation.grid(row=10, column=1, padx=10, pady=5, sticky='w')
+        entEducation = Label(frameinfo, text=self.Educations[1], font='tahoma 10 bold')
+        entEducation.grid(row=11, column=1, padx=10, pady=5, sticky='w')
+        entEducation = Label(frameinfo, text=self.Educations[2], font='tahoma 10 bold')
+        entEducation.grid(row=12, column=1, padx=10, pady=5, sticky='w')
+        entEducation = Label(frameinfo, text=self.Educations[3], font='tahoma 10 bold')
+        entEducation.grid(row=13, column=1, padx=10, pady=5, sticky='w')
+        entEducation = Label(frameinfo, text=self.Educations[4], font='tahoma 10 bold')
+        entEducation.grid(row=14, column=1, padx=10, pady=5, sticky='w')
 
-        lblEducationField = Label(frameinfo, text='Education Field: ')
-        lblEducationField.grid(row=12, column=0, padx=10, pady=5, sticky='w')
-        txtEducationField = StringVar()
-        cmbEducationField = Combobox(frameinfo, width=20, textvariable=txtEducationField, state=self.State)
-        cmbEducationField['values'] = self.EducationFiels
-        cmbEducationField.grid(row=12, column=1, padx=10, pady=5, sticky='w')
-        cmbEducationField.current()
+        # educationsVar = StringVar(value=self.Educations)
+        # listbox = Listbox(frameinfo, listvariable=educationsVar, height=5, borderwidth=2)
+        # listbox.grid(row=10, column=1, padx=10, pady=5, sticky='w')
 
-        btnAdd = Button(frameinfo, state=self.State, text='Add', borderwidth=2, width=3, relief='groove',
-                        command=addToList)
-        btnAdd.grid(row=12, column=1, padx=(160,0), pady=5, sticky='w')
-
-        educationsVar = StringVar(value=self.Educations)
-        listbox = Listbox(frameinfo, state=self.State, listvariable=educationsVar, height=5, borderwidth=2)
-        listbox.grid(row=13, column=1, padx=10, pady=5, sticky='w')
-
-        # TODO move to DAL, read from DB
         lblType = Label(frameinfo, text='Type: ')
-        lblType.grid(row=14, column=0, padx=10, pady=5, sticky='w')
-        txtType = StringVar()
-        cmbType = Combobox(frameinfo, textvariable=txtType, width=20, state=self.State)
-        arrayType = ['1', '2']
-        cmbType['values'] = arrayType
-        cmbType.grid(row=14, column=1, padx=10, pady=5, sticky='w')
-        cmbType.current()
+        lblType.grid(row=15, column=0, padx=10, pady=5, sticky='w')
+        cmbType = Label(frameinfo, text=self.Student.Type, font='tahoma 10 bold')
+        cmbType.grid(row=15, column=1, padx=10, pady=5, sticky='w')
 
-        btnRegisterStudent = Button(studentfrm, text='Register Student', width=20, relief='groove',
-                                    command=getStudentCommand)
-        btnRegisterStudent.grid(row=14, column=0, padx=30, pady=10, sticky='w')
+        lblRegisterdate = Label(frameinfo, text='Registerdate: ')
+        lblRegisterdate.grid(row=16, column=0, padx=10, pady=5, sticky='w')
+        cmbRegisterdate = Label(frameinfo, text=self.Registerdate, font='tahoma 10 bold')
+        cmbRegisterdate.grid(row=16, column=1, padx=10, pady=5, sticky='w')
 
-        btnBack = Button(studentfrm, text='Back to Main', width=20, relief='groove', command=backToMain)
-        btnBack.grid(row=14, column=0, padx=30, pady=10, sticky='e')
+        btnBack = Button(studentfrm, text='Back', width=20, relief='groove', command=backToMain)
+        btnBack.grid(row=1, column=0, padx=30, pady=5, sticky='e')
 # endregion
         studentfrm.mainloop()

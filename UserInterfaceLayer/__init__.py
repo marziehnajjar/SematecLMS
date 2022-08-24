@@ -3,6 +3,7 @@ from .LoginForm import *
 from .MainForm import *
 from .ProfileForm import *
 from .StudentForm import *
+from .StudentViewForm import *
 from .TeacherForm import *
 from .EmployeeForm import *
 from .DepartmentForm import *

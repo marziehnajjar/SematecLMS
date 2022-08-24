@@ -12,3 +12,10 @@ class StudentVD:
         if error == 0:
             studentdb = StudentDB(self.Student)
             return studentdb.insertStudent()
+
+    def validationUpdateForm(self):
+        error = 0
+
+        if error == 0:
+            studentdb = StudentDB(self.Student)
+            studentdb.updateStudent()
