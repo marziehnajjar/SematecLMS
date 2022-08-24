@@ -11,8 +11,8 @@ imgSematec = PhotoImage(file='Semateclogo.png')
 w = str(imgSematec.width())
 h = str(imgSematec.height())
 splashScreen.geometry(f'{w}x{h}')
-splashScreen.title('splash Screen')
-splashScreen.resizable(None, None)
+# splashScreen.title('splash Screen')
+# splashScreen.resizable(None, None)
 positionRight = int(splashScreen.winfo_screenwidth() / 2 - 400 / 2)
 positionDown = int(splashScreen.winfo_screenheight() / 2 - 100 / 2)
 splashScreen.geometry("+{}+{}".format(positionRight, positionDown))
@@ -30,7 +30,7 @@ def main():
 
 
 # Set Interval
-splashScreen.after(3000, main)
+splashScreen.after(500, main)
 
 # Execute tkinter
 splashScreen.mainloop()

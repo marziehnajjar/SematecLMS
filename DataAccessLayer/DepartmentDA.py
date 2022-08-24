@@ -1,6 +1,7 @@
 import sqlite3
 import Model.DepartmentModel
 from tkinter import messagebox as msg
+import pyodbc as odb
 
 
 class DepartmentDB:
@@ -8,6 +9,7 @@ class DepartmentDB:
         self.Department = department
 
     def insertDepartment(self):
+        #  SQLite -----------------------------------------------------------------
         dbName = './DB/Sematec.db'
         queryDepartment = 'INSERT INTO Department(DepartmentName,Description)VALUES(?,?)'
         paramsDepartment = (self.Department.DepartmentName, self.Department.Description)

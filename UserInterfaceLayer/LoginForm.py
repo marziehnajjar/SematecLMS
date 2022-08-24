@@ -14,7 +14,7 @@ class LoginUI:
         loginfrm.title('Login Form')
         loginfrm.iconbitmap('login.ico')
         loginfrm.geometry('290x340')
-        loginfrm.resizable(None, None)
+        loginfrm.resizable(False, False)
         positionRight = int(loginfrm.winfo_screenwidth() / 2 - 290 / 2)
         positionDown = int(loginfrm.winfo_screenheight() / 2 - 340 / 2)
         loginfrm.geometry("+{}+{}".format(positionRight, positionDown))
@@ -85,7 +85,7 @@ class LoginUI:
         rdSQLServer = Radiobutton(loginfrm, text='SQL Server', variable=txtDatabase, value=2)
         rdSQLServer.grid(row=3, column=0, padx=40, pady=10, sticky='e')
 
-        btn = Button(loginfrm, text='Login', width=33, relief='groove', command=checkLogin, font='Tahoma 10')
+        btn = Button(loginfrm, text='Login', width=33, relief='groove', font='Tahoma 10', command=checkLogin)
         btn.grid(row=4, column=0, padx=20, pady=10)
 
         loginfrm.mainloop()

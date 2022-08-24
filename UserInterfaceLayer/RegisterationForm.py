@@ -16,7 +16,7 @@ class RegisterationUI:
         registerationfrm = Tk()
         registerationfrm.geometry('300x300')
         registerationfrm.title('Registeration')
-        registerationfrm.resizable(0, 0)
+        registerationfrm.resizable(False, False)
         positionRight = int(registerationfrm.winfo_screenwidth() / 2 - 300 / 2)
         positionDown = int(registerationfrm.winfo_screenheight() / 2 - 300 / 2)
         registerationfrm.geometry("+{}+{}".format(positionRight, positionDown))

@@ -67,12 +67,12 @@ SematecLearningManagementSystem_data  ROWS Data   DataFG          NonMasterDataF
 ------------------------------------------------------------------------------------------------------------------------------------
 6.Table   user 1-* Roles 1-* permission
 
-User {UserCode(PK)(int), FirstName(Nvarchar(20)), LastName(Nvarchar(40)), UserName(varchar(40)), Password(varchar(40)), RoleID(FK)(tinyint), wrongPass(tinyint), LastLogin(datetime)}
+User {UserCode(PK)(int), FirstName(Nvarchar(20)), LastName(Nvarchar(40)), UserName(varchar(40)), Password(varchar(40)), RoleID(FK)(tinyint), WrongCount(tinyint), LastLogin(datetime),Email(varchar(50))}
 User-Roles {UserCode(PK)(int), RoleID(PK)(tinyint)} 
 Roles {RoleID(PK)(tinyint), RoleName(Nvarchar(40))} -> Admin, Stability, Reporter, UserManagement 
 Permission {PermissionID(PK)(tinyint), PermissionName(Nvarchar(40))} -> RegisterTeacher, RegisterStudent, RegisterEmployee, UpdateTeacher, UpdateStudent, UpdateEmployee, DeleteTeacher, DeleteStudent, DeleteEmployee, بازیابی دانشجو , RegisterUse
 Roles-Permission {RoleID(PK)(tinyint), PermissionID(PK)(tinyint)}  
-Persons { PersonCode(PK)(int),FirstName(Nvarchar(20)),LastName(Nvarchar(40)),NationalCode(char(10)),Sex(Nvarchar(3)),Birthdate(date),Email(varchar(50)),Mobile(char(11)),*AddressCode(FK)*,*EducationCode(FK)*}
+Persons { PersonCode(PK)(int),FirstName(Nvarchar(20)),LastName(Nvarchar(40)),NationalCode(char(10)),Sex(Nvarchar(3)),Birthdate(date),Email(varchar(50)),Mobile(char(11)),*AddressCode(FK)*}
 Student {StudentCode(PK)(int),PersonCode(FK)(int),*TypeCode(FK)*}
 Teacher {TeacherCode(PK)(smallint),PersonCode(FK)(int),InsuranceNumber, CardNumber, TeacherPhoto[FileStream](varbinary(max))}
 Employee {EmployeeCode(PK)(int),DepartmentCode(FK),PersonCode(FK),Hiredate(date),ManagerCode(FK), EmployeePhoto(varbinary(max))} 
@@ -80,12 +80,15 @@ Department {DepartmentCode(PK)(tinyint),DepartmentName(Nvarchar(40))}
 CourseCategory {CourseCategoryCode(PK), CategoryName} 
 Course { CourseCode(PK),CourseCategoryCode(FK),CourseName(Nvarchar(40)), Duration, Description(Nvarchar(40))} 
 Student-Course-Teacher{StudentCode(FK),CourseCode(FK),TeacherCode(FK),YearQuarter,Score(tinyint)} 
-Addres {AddressCode(PK),Country(Nvarchar(50)),State/Province(Nvarchar(50)),City(Nvarchar(30)),StreetName(Nvarchar(30)),ZipCode(char(11))}
+Address {AddressCode(PK),Country(Nvarchar(50)),State/Province(Nvarchar(50)),City(Nvarchar(30)),StreetName(Nvarchar(30)),ZipCode(char(11))}
 Education {EducationCode(PK), EducationDegree, *EducationFieldCode(FK)*}
 EducationField {EducationFieldCode(PK), FieldName}
+
 Type {TypeCode(PK), TypeName(char(12))}
 
-  
+PersonEducation
+
+JobLevel  
 
 
 

@@ -1,6 +1,7 @@
 import sqlite3
 import Model.CourseCategoryModel
 from tkinter import messagebox as msg
+import pyodbc as odb
 
 
 class CourseDB:
@@ -9,6 +10,7 @@ class CourseDB:
         self.Course = course
 
     def insertCourse(self):
+        #  SQLite -----------------------------------------------------------------
         dbName = './DB/Sematec.db'
         queryCourse = 'INSERT INTO Course(CoursecategoryID,CourseName,Duration,Description)VALUES(?,?,?,?)'
         paramsCourse = (self.Course.CoursecategoryID, self.Course.CourseName, self.Course.Duration,

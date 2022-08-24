@@ -7,17 +7,17 @@ from tkcalendar import DateEntry
 from Model import *
 
 
-class RegisterDepartmentUI:
+class DepartmentUI:
     def __init__(self, user: User):
         self.User = user
 
     def departmentFormLoad(self):
         departmentfrm = Tk()
-        departmentfrm.geometry('440x180')
-        departmentfrm.title('Register a Department')
-        departmentfrm.resizable(0, 0)
+        departmentfrm.geometry('440x150')
+        departmentfrm.title('Register Department')
+        departmentfrm.resizable(False, False)
         positionRight = int(departmentfrm.winfo_screenwidth() / 2 - 440 / 2)
-        positionDown = int(departmentfrm.winfo_screenheight() / 2 - 180 / 2)
+        positionDown = int(departmentfrm.winfo_screenheight() / 2 - 150 / 2)
         departmentfrm.geometry("+{}+{}".format(positionRight, positionDown))
 
         def backToMain():
@@ -26,8 +26,9 @@ class RegisterDepartmentUI:
             mainui = MainUI(self.User)
             mainui.mainFormLoad()
 
-        def insertDepartmentCommand():
+        def getDepartmentCommand():
             DepartmentName = txtDepartmentName.get()
+
             department = Model.Department(DepartmentName)
             departmentdb = DepartmentDB(department)
             departmentdb.insertDepartment()
@@ -35,23 +36,20 @@ class RegisterDepartmentUI:
         frameinfo = LabelFrame(departmentfrm, text=' Department Information ')
         frameinfo.grid(row=0, column=0, padx=20, pady=10, sticky='w')
 
+        lblID = Label(frameinfo, text='Department ID : ')
+        lblID.grid(row=0, column=0, padx=10, pady=5, sticky='w')
+
         lblDepartmentName = Label(frameinfo, text='DepartmentName: ')
-        lblDepartmentName.grid(row=1, column=0, padx=10, pady=10, sticky='w')
+        lblDepartmentName.grid(row=1, column=0, padx=10, pady=5, sticky='w')
         txtDepartmentName = StringVar()
         entDepartmentName = Entry(frameinfo, textvariable=txtDepartmentName, width=40, highlightthickness=1)
-        entDepartmentName.grid(row=1, column=1, padx=10, pady=10, sticky='w')
-
-        lblDescription = Label(frameinfo, text='Description: ')
-        lblDescription.grid(row=2, column=0, padx=10, pady=10, sticky='w')
-        txtDescription = StringVar()
-        entDescription = Entry(frameinfo, textvariable=txtDescription, width=40, highlightthickness=1)
-        entDescription.grid(row=2, column=1, padx=10, pady=10, sticky='w')
+        entDepartmentName.grid(row=1, column=1, padx=10, pady=5, sticky='w')
 
         btnRegisterStudent = Button(departmentfrm, text='Register Department', width=20, relief='groove',
-                                    command=insertDepartmentCommand)
-        btnRegisterStudent.grid(row=3, column=0, padx=30, pady=10, sticky='w')
+                                    command=getDepartmentCommand)
+        btnRegisterStudent.grid(row=2, column=0, padx=30, pady=10, sticky='w')
 
         btnBack = Button(departmentfrm, text='Back to Main', width=20, relief='groove', command=backToMain)
-        btnBack.grid(row=3, column=0, padx=30, pady=10, sticky='e')
+        btnBack.grid(row=2, column=0, padx=30, pady=10, sticky='e')
 
         departmentfrm.mainloop()

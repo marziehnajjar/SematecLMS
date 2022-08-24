@@ -1,6 +1,7 @@
 import sqlite3
 import Model.StudentModel
 from tkinter import messagebox as msg
+import pyodbc as odb
 
 
 class UserDB:
@@ -8,6 +9,7 @@ class UserDB:
         self.User = user
 
     def insertRow(self):
+        #  SQLite -----------------------------------------------------------------
         dbName = './DB/Sematec.db'
         query = 'INSERT INTO User(FirstName,LastName,UserName,Password,Admin)' \
                 'VALUES(?,?,?,?,?)'

@@ -1,6 +1,7 @@
 import sqlite3
 import Model.RegisterationModel
 from tkinter import messagebox as msg
+import pyodbc as odb
 
 
 class RegisterationDB:
@@ -9,6 +10,7 @@ class RegisterationDB:
         self.Registeration = registeration
 
     def getTeacherList(self):
+        #  SQLite -----------------------------------------------------------------
         dbName = './DB/Sematec.db'
         query = 'SELECT Teacher.PersonID , Person.FirstName , Person.LastName FROM Teacher ' \
                 'INNER JOIN Person ON Teacher.PersonID=Person.ID'

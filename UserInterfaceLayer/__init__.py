@@ -1,13 +1,14 @@
 # from .ModuleName import *
 from .LoginForm import *
-from .ProfileForm import *
 from .MainForm import *
-from .RegisterStudentForm import *
-from .RegisterTeacherForm import *
-from .RegisterEmployeeForm import *
-from .RegisterDepartmentForm import *
-from .RegisterCourseCategoryForm import *
-from .RegisterCourseForm import *
+from .ProfileForm import *
+from .StudentForm import *
+from .TeacherForm import *
+from .EmployeeForm import *
+from .DepartmentForm import *
+from .CourseCategoryForm import *
+from .CourseForm import *
 from .RegisterationForm import *
+from .TrainingCalendarForm import *
 
-# It means that you import all(methods, variables,...) -> you don't need to prefix them when using them
+# It means that you import all(classes, methods,...) -> you don't need to prefix them when using them
